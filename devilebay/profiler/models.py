@@ -68,7 +68,7 @@ class UserAddress(models.Model):
         verbose_name='User of Address',
         related_name='user_address_user'
     )
-    nation = user_status = models.IntegerField(choices=ACCEPTED_NATIONS)
+    nation = models.IntegerField(choices=ACCEPTED_NATIONS)
     direction = models.TextField(blank=False)
     messager = models.IntegerField(blank=False)
 
