@@ -28,14 +28,14 @@ class UserCalification(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Target User',
-        related_name='tuser'
+        related_name='user_calification_target_user'
     )
     origin_username = models.ForeignKey(
         DevilUser,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Origin User',
-        related_name='ouser'
+        related_name='user_calification_origin_user'
     )
     rating = models.FloatField()
     comment = models.TextField()
@@ -66,7 +66,7 @@ class UserAddress(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='User of Address',
-        related_name='auser'
+        related_name='user_address_user'
     )
     nation = user_status = models.IntegerField(choices=ACCEPTED_NATIONS)
     direction = models.TextField(blank=False)
@@ -87,7 +87,7 @@ class CreditCard(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='User of credit card',
-        related_name='cuser'
+        related_name='credit_card_user'
     )
     number = models.CharField(max_length=15, blank=False)
     company = models.IntegerField(choices=EVIL_MONEY_COMPANIES, blank=False)
@@ -117,7 +117,7 @@ class Product(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='User of product',
-        related_name='prouser'
+        related_name='product_user'
     )
     ship_method = models.IntegerField(choices=SHIP_METHODS, blank=False)
     pay_method = models.IntegerField(choices=PAY_METHODS, blank=False)
@@ -135,14 +135,14 @@ class ProductCalification(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Target User',
-        related_name='tuser'
+        related_name='product_calification_target_user'
     )
     origin_username = models.ForeignKey(
         DevilUser,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Origin User',
-        related_name='ouser'
+        related_name='product_calification_origin_user'
     )
     rating = models.FloatField()
     comment = models.TextField()
@@ -154,14 +154,14 @@ class BlockedProduct(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Target User',
-        related_name='tuser'
+        related_name='blocked_product_target_product'
     )
     origin_username = models.ForeignKey(
         DevilUser,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Origin User',
-        related_name='ouser'
+        related_name='blocked_product_origin_user'
     )
     comment = models.TextField()
 
@@ -172,19 +172,19 @@ class BlockedUser(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Target User',
-        related_name='tuser'
+        related_name='blocked_user_target_user'
     )
     origin_username = models.ForeignKey(
         DevilUser,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Origin User',
-        related_name='ouser'
+        related_name='blocked_user_origin_user'
     )
     comment = models.TextField()
 
 
-class Ticket(models.MOdel):
+class Ticket(models.Model):
     date = models.DateField(auto_now=True)
     pay_method = models.IntegerField(choices=Product.PAY_METHODS)
     ship_method = models.IntegerField(choices=Product.SHIP_METHODS)
@@ -193,28 +193,28 @@ class Ticket(models.MOdel):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Buyer',
-        related_name='buyer'
+        related_name='ticket_buyer'
     )
     ship_address = models.ForeignKey(
         UserAddress,
         null=True,
         on_delete=models.SET_NULL,
-        verbose_name='Address',
-        related_name='address'
+        verbose_name='Shipping Address',
+        related_name='ticket_ship_address'
     )
     bill_address = models.ForeignKey(
         UserAddress,
         null=True,
         on_delete=models.SET_NULL,
-        verbose_name='Address',
-        related_name='address'
+        verbose_name='Billing Address',
+        related_name='ticket_bill_address'
     )
     bill_card = models.ForeignKey(
         CreditCard,
         null=True,
         on_delete=models.SET_NULL,
-        verbose_name='Address',
-        related_name='address'
+        verbose_name='Credit Card',
+        related_name='ticket_credit_card'
     )
 
 
@@ -224,22 +224,22 @@ class BoughtProduct(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Buyer',
-        related_name='buyer'
+        related_name='bought_product_buyer'
     )
     product = models.ForeignKey(
         Product,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Good',
-        related_name='good'
+        related_name='bought_product_good'
     )
     date = models.DateField(auto_now=True)
-    ticket = models.models.ForeignKey(
+    ticket = models.ForeignKey(
         Ticket,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Buy Ticket',
-        related_name='ticket'
+        related_name='bought_product_ticket'
     )
 
 
@@ -253,14 +253,14 @@ class ProductCategory(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Category',
-        related_name='category'
+        related_name='product_category_category'
     )
     product = models.ForeignKey(
         Product,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Good',
-        related_name='good'
+        related_name='product_category_good'
     )
 
 
@@ -272,14 +272,14 @@ class ProductAuctionValueStamp(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Buyer',
-        related_name='buyer'
+        related_name='pavs_buyer'
     )
     product = models.ForeignKey(
         Product,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Good',
-        related_name='good'
+        related_name='pavs_good'
     )
 
 
@@ -291,5 +291,5 @@ class ProductBuyNowValueStamp(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Good',
-        related_name='good'
+        related_name='pbnvs_good'
     )
