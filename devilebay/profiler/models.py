@@ -97,14 +97,14 @@ class CreditCard(models.Model):
 
 class Product(models.Model):
     SHIP_METHODS = (
-        1, 'Banshee Carrier',
-        2, 'Underground Worm',
-        3, 'Frost Dragon',
-        4, 'Succubus'
+        (1, 'Banshee Carrier'),
+        (2, 'Underground Worm'),
+        (3, 'Frost Dragon'),
+        (4, 'Succubus')
     )
     PAY_METHODS = (
-        1, 'Auction',
-        2, 'Buy now'
+        (1, 'Auction'),
+        (2, 'Buy now')
     )
 
     PRODUCT_STATUS = (
