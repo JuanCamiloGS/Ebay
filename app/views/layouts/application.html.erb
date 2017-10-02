@@ -78,12 +78,21 @@
     <div class="header">
       <div class="container">
         <div class="logo">
-          <a href="index.html"><span>Re</span>sale</a>
+          <a href="/"><span>Re</span>sale</a>
         </div>
-        <div class="header-right">
-        <a class="account" href="login.html">My Account</a>
-    <!-- Large modal -->
-      </div>
+        
+        <% if user_signed_in? %>
+          <div class="header-right">
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class:"account"%>
+          </div>
+          <div class="header-right">
+            <a class="account" href="users/sign_in">My Account</a>
+          </div>
+        <% else %>
+          <div class="header-right">
+            <a class="account" href="users/sign_in">Sign In</a>
+          </div>
+        <% end %>
     </div>
 
     <%= yield %>
@@ -91,7 +100,7 @@
     <div class="footer-bottom text-center">
       <div class="container">
         <div class="footer-logo">
-          <a href="index.html"><span>Re</span>sale</a>
+          <a href="/"><span>Re</span>sale</a>
         </div>
         <div class="footer-social-icons">
           <ul>

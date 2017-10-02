@@ -2,10 +2,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
 
-      t.string :name
-      t.float :seller_grade
-      t.float :buyer_grade
-      t.boolean :block
+      t.string :name, null: false, default: ""
+      t.float :seller_grade, null: false, default: 0
+      t.integer :s_grades_number, null: false, default: 1
+      t.float :buyer_grade, null: false, default: 0
+      t.integer :b_grades_number, null: false, default: 1
+      t.boolean :block, null: false, default: false
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

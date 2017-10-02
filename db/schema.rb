@@ -13,10 +13,12 @@
 ActiveRecord::Schema.define(version: 20171001055013) do
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
-    t.float "seller_grade", limit: 24
-    t.float "buyer_grade", limit: 24
-    t.boolean "block"
+    t.string "name", default: "", null: false
+    t.float "seller_grade", limit: 24, default: 0.0, null: false
+    t.integer "s_grades_number", default: 1, null: false
+    t.float "buyer_grade", limit: 24, default: 0.0, null: false
+    t.integer "b_grades_number", default: 1, null: false
+    t.boolean "block", default: false, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

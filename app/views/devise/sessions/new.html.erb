@@ -1,20 +1,21 @@
+
 <div style="border-style: dotted; border-color: #ffffff; border-top-color: #000000;">
   <div class="container" style="padding-top: 6vh; padding-bottom: 7vh;">  
     <h2>Log in</h2>
-
+    <br>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field">
+      <div class="">
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true %>
       </div>
 
-      <div class="field">
+      <div class="">
         <%= f.label :password %><br />
         <%= f.password_field :password, autocomplete: "off" %>
       </div>
 
       <% if devise_mapping.rememberable? -%>
-        <div class="field">
+        <div class="">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me %>
         </div>
