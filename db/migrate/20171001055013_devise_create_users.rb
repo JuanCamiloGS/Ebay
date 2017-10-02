@@ -8,6 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.float :buyer_grade, null: false, default: 0
       t.integer :b_grades_number, null: false, default: 1
       t.boolean :block, null: false, default: false
+      t.boolean :admin, null: false, default: false
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

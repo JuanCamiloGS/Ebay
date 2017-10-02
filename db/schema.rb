@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20171001055013) do
     t.float "buyer_grade", limit: 24, default: 0.0, null: false
     t.integer "b_grades_number", default: 1, null: false
     t.boolean "block", default: false, null: false
+    t.boolean "admin", default: false, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
