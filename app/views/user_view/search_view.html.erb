@@ -1,0 +1,31 @@
+<div class="row" style="padding-top: 10vh; padding-bottom: 20vh">
+        <div class="container">
+                <table id="example" class="display" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>User</th>
+                            <th>Creation date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% Product.where("category_id = ?", @category_id).each do |row|%>
+                                <tr>
+                                    <td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
+                                    <td><%= Category.find(row['category_id']).name %></td>
+                                    <td><a href="seller_profile?user=<%=row['user_id']%>"><%= User.find(row['user_id']).name %></a></td>
+                                    <td><%= row['created_at'] %></td>
+                                </tr>
+                        <% end %>
+                    </tbody>
+                </table> 
+            </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+        });
+    } );
+</script>

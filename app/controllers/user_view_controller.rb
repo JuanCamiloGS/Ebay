@@ -59,4 +59,8 @@ class UserViewController < ApplicationController
   def buy_product
     SellCalification.create!({:target_user => Product.find(params['productId']).user_id,:origin_user => current_user.id, :rating => params['grade']})
   end
+
+  def search_view
+    @category_id = params['category']
+  end
 end
