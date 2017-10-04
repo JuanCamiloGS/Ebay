@@ -33,7 +33,7 @@
                     </div>
                     <div class="sign-up2">
                             <div style="padding-top: 3vh">
-                                <select style="width: 100%">
+                                <select style="width: 100%" id="SO1">
                                     <% ShippingOption.find_each do |row|%>
                                         <option value="<%= raw row['id']%>"><%= row['name']%></option>
                                     <% end %>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="sign-up2">
                             <div style="padding-top: 3vh">
-                                <select style="width: 100%">
+                                <select style="width: 100%" id="SO2">
                                     <% ShippingOption.find_each do |row|%>
                                         <option value="<%= raw row['id']%>"><%= row['name']%></option>
                                     <% end %>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="sign-up2">
                             <div style="padding-top: 3vh">
-                                <select style="width: 100%">
+                                <select style="width: 100%" id="SO3">
                                     <% ShippingOption.find_each do |row|%>
                                         <option value="<%= raw row['id']%>"><%= row['name']%></option>
                                     <% end %>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="sign-up2">
                         <div style="padding-top: 3vh">
-                            <select style="width: 100%">
+                            <select style="width: 100%" id="cat_id">
                                 <% Category.find_each do |row|%>
                                     <option value="<%= raw row['id']%>"><%= row['name']%></option>
                                 <% end %>
@@ -89,9 +89,7 @@
                 </div>
                 <div class="sub_home">
                     <div class="sub_home_left">
-                        <form>
-                            <input type="submit" value="Create">
-                        </form>
+                            <input type="submit" value="Create!" onclick="create()">
                     </div>
                     <div class="sub_home_right">
                         <p>Go Back to <a href="index.html">Home</a></p>
@@ -101,3 +99,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function create(){
+            console.log("Entré")
+            name = $("#pName").val();
+            description = $("#pDesc").val();
+            category_id = $("#cat_id").val();
+            so_1 = $("#SO1").val();
+            so_2 = $("#SO2").val();
+            so_3 = $("#SO3").val();
+            $.ajax({
+                type: 'GET',
+                url: 'newProduct',
+                data: {name:name, description:description, category_id:category_id, so_1:so_1, so_2:so_2, so_3:so_3},
+                success: function(){
+                    console.log("Success!")
+                    alert("Product succesfully created");
+                    //$('#transferS').show().delay(3500).fadeOut();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("There was a problem");
+                    
+                }
+            });
+        }
+    </script>

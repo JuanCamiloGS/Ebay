@@ -1,3 +1,4 @@
+
 <div class="single-page main-grid-border">
     <div class="container">
         <div class="product-desc">
@@ -5,14 +6,34 @@
                 <h2><%= current_user.name %></h2>
                 
                 <div class="product-details">
-                    <p><strong>Description</strong> : It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                    <p><strong>Description:</strong>  <%= current_user.description%></p>
                 
                 </div>
                 <br>
                 <div class="product-details">
-                    <p><strong>List of products</strong></p>
+                    <p><strong>List of products:</strong></p>
                 
                 </div>
+                <table id="example" class="display" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Creation date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% Product.find_each do |row|%>
+                            <% if row['user_id'] == current_user.id%>
+                                <tr>
+                                    <td><a href="user_panel"><%= row['name'] %></a></td>
+                                    <td><%= Category.find(row['category_id']).name %></td>
+                                    <td><%= row['created_at'] %></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    </tbody>
+                </table>
             </div>
             <div class="col-md-5 product-details-grid">
                 <div class="item-price">
@@ -40,3 +61,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "bLengthChange": false,
+            "searching": false
+        });
+    } );
+</script>
