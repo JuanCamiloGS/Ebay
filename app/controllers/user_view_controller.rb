@@ -2,6 +2,17 @@ class UserViewController < ApplicationController
   before_action :authenticate_user!
 
   def main_page
+    total = 0
+    SellCalification.where("target_user = ?", current_user.id).each do |row|
+      puts "entré"
+      total = row['rating'].to_i + total
+    end
+    number = SellCalification.where("target_user = ?", current_user.id).count
+    if number == 0
+      @sellgrade = 5
+    else
+      @sellgrade = total.to_f/number
+    end
   end
 
   def create_product
@@ -25,6 +36,17 @@ class UserViewController < ApplicationController
     @userId = params['user']
     @username = User.find(@userId).name
     @userdesc = User.find(@userId).description
+
+    total = 0
+    SellCalification.where("target_user = ?", @userId).each do |row|
+      total = row['rating'].to_i + total
+    end
+    number = SellCalification.where("target_user = ?", @userId).count
+    if number == 0
+      @sellgrade = 5
+    else
+      @sellgrade = total.to_f/number
+    end
   end
 
   def product_profile
@@ -35,6 +57,6 @@ class UserViewController < ApplicationController
   end
 
   def buy_product
-    SellCalification.create!({:target_user => Product.find(params['productId']),:origin_user => current_user.id, :rating => params['grade']})
+    SellCalification.create!({:target_user => Product.find(params['productId']).user_id,:origin_user => current_user.id, :rating => params['grade']})
   end
 end
