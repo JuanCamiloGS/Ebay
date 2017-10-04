@@ -27,6 +27,12 @@
         <%= f.label :password_confirmation %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off" %>
       </div>
+      <br>
+      <h3>Please enter a text describing you</h3>
+      <div class="">
+        <%= f.label :description %><br />
+        <%= f.text_field :description, autofocus: true %>
+      </div>
 
       <div class="actions">
         <%= f.submit "Sign up" %>

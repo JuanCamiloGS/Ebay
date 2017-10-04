@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'user_panel', to: 'user_view#main_page'
+  get 'create_product', to: 'user_view#create_product'
+
   devise_for :users
   get 'home/index'
   root 'home#index'

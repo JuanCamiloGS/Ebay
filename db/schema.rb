@@ -10,16 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171001055013) do
+ActiveRecord::Schema.define(version: 20171004120114) do
+
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+  end
+
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.text "description"
+    t.integer "category_id"
+    t.boolean "block"
+    t.boolean "auction"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shipping_options", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_typeID", default: 0, null: false
     t.string "name", default: "", null: false
-    t.float "seller_grade", limit: 24, default: 0.0, null: false
-    t.integer "s_grades_number", default: 1, null: false
-    t.float "buyer_grade", limit: 24, default: 0.0, null: false
-    t.integer "b_grades_number", default: 1, null: false
-    t.boolean "block", default: false, null: false
-    t.boolean "admin", default: false, null: false
+    t.text "description"
+    t.string "picture_path", default: "", null: false
+    t.integer "status", default: 0, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
