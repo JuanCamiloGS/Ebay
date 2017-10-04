@@ -163,9 +163,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<tbody>
 							<% Product.order(:created_at).first(10).each do |row|%>
 									<tr>
-										<td><a href="user_panel"><%= row['name'] %></a></td>
+										<td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
 										<td><%= Category.find(row['category_id']).name %></td>
-										<td><%= User.find(row['user_id']).name %></td>
+										<td><a href="seller_profile?user=<%=row['user_id']%>"><%= User.find(row['user_id']).name %></a></td>
 										<td><%= row['created_at'] %></td>
 									</tr>
 							<% end %>

@@ -1,0 +1,67 @@
+<div class="single-page main-grid-border">
+        <div class="container">
+            <div class="product-desc">
+                <div class="col-md-7 product-view">
+                    <h2><%= @username %></h2>
+                    
+                    <div class="product-details">
+                        <p><strong>Description:</strong>  <%= @userdesc %></p>
+                    
+                    </div>
+                    <br>
+                    <div class="product-details">
+                        <p><strong>List of products:</strong></p>
+                    
+                    </div>
+                    <table id="example" class="display" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Creation date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% Product.find_each do |row|%>
+                                <% if row['user_id'] == @userId.to_i%>
+                                    <tr>
+                                        <td><a href="user_panel"><%= row['name'] %></a></td>
+                                        <td><%= Category.find(row['category_id']).name %></td>
+                                        <td><%= row['created_at'] %></td>
+                                    </tr>
+                                <% end %>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-5 product-details-grid">
+                    <div class="item-price">
+                        <div class="product-price">
+                            <p class="p-price">Seller grade</p>
+                            <h3 class="rate">5</h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="condition">
+                            <p class="p-price">Buyer grade</p>
+                            <h4>5</h4>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="itemtype">
+                            <p class="p-price">User type</p>
+                            <h4>Company</h4>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "bLengthChange": false,
+                "searching": false
+            });
+        } );
+    </script>

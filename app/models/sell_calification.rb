@@ -1,0 +1,2 @@
+class SellCalification < ApplicationRecord
+end

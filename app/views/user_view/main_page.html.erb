@@ -26,7 +26,7 @@
                         <% Product.find_each do |row|%>
                             <% if row['user_id'] == current_user.id%>
                                 <tr>
-                                    <td><a href="user_panel"><%= row['name'] %></a></td>
+                                    <td><%= row['name'] %></td>
                                     <td><%= Category.find(row['category_id']).name %></td>
                                     <td><%= row['created_at'] %></td>
                                 </tr>

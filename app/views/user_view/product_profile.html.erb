@@ -1,0 +1,108 @@
+<div id="page-wrapper" class="sign-in-wrapper">
+        <div class="graphs">
+            <div class="sign-up">
+                <h1>Product profile</h1>
+                <!-- <p class="creating">Having hands on experience in creating innovative designs,I do offer design 
+                    solutions which harness.</p> -->
+                <h2>Information:</h2>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Product name :</h4>
+                    </div>
+                    <div class="sign-up2">
+                        <form>
+                            <input type="text" value="<%= @productname %> " required=" " id="pName" readonly/>
+                        </form>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Description :</h4>
+                    </div>
+                    <div class="sign-up2">
+                        <form>
+                            <input type="text" value="<%= @productdesc %>" required=" " id="pDesc" readonly/>
+                        </form>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Category</h4>
+                    </div>
+                    <div class="sign-up2">
+                        <form>
+                            <input type="text" value="<%=@productcat%>" required=" " id="pDesc" readonly/>
+                        </form>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Shipping option:</h4>
+                    </div>
+                    <div class="sign-up2">
+                            <div style="padding-top: 3vh">
+                                <select style="width: 100%" id="SO1">
+                                    <% ProductShipping.find_each do |row|%>
+                                        <% if row['product_id'] == @productId.to_i%>
+                                            <option value="<%= raw row['id']%>"><%= ShippingOption.find(row['shipping_id']).name%></option>
+                                        <% end %>
+                                    <% end %>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Rate the seller:</h4>
+                    </div>
+                    <div class="sign-up2">
+                            <div style="padding-top: 3vh">
+                                <select style="width: 100%" id="grade">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sub_home">
+                    <div class="sub_home_left">
+                            <input type="submit" value="Buy!" onclick="Buy(<%=@productId%>)">
+                    </div>
+                    <div class="sub_home_right">
+                        <p>Go Back to <a href="index.html">Home</a></p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function Buy(productId){
+            console.log(productId)
+            
+            grade = $("#grade").val();
+            $.ajax({
+                type: 'GET',
+                url: 'BuyProduct',
+                data: {productId:productId, grade:grade},
+                success: function(){
+                    console.log("Success!")
+                    alert("Product succesfully created");
+                    //$('#transferS').show().delay(3500).fadeOut();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("There was a problem");
+                    
+                }
+            });
+        }
+    </script>
