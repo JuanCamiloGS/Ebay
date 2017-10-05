@@ -1,0 +1,93 @@
+<div style="border-style: dotted; border-color: #ffffff; border-top-color: #000000;">
+    <div class="row" style="padding-top: 10vh; padding-bottom: 20vh">
+        <div class="trend-ads">
+                <h2>Users list</h2>
+        </div>
+        
+        <div class="container">
+            <table id="example" class="display" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Block</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% User.find_each do |row|%>
+                            <tr>
+                                <td><%= row['name'] %></td>
+                                <td><%= row['email'] %></td>
+                                <%if row['status'] == 0%>
+                                    <td><button type="button" class="btn" onclick="block(<%=row['id']%>,0,0)">Block</button></td>
+                                <%else%>
+                                    <td><button type="button" class="btn" onclick="block(<%=row['id']%>,1,0)">Unblock</button></td>
+                                <%end%>
+                            </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="trend-ads" style="padding-top: 10vh">
+                <h2>Products list</h2>
+        </div>
+
+        <div class="container">
+            <table id="example2" class="display" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User</th>
+                        <th>Category</th>
+                        <th>Block</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Product.find_each do |row|%>
+                            <tr>
+                                <td><%= row['name'] %></td>
+                                <td><%= User.find(row['user_id']).name %></td>
+                                <td><%= Category.find(row['category_id']).name %></td>
+                                <%if row['block'] == false%>
+                                    <td><button type="button" class="btn" onclick="block(<%=row['id']%>,0,1)">Block</button></td>
+                                <%else%>
+                                    <td><button type="button" class="btn" onclick="block(<%=row['id']%>,1,1)">Unblock</button></td>
+                                <%end%>
+                            </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "bLengthChange": false,
+            "searching": false
+        });
+
+        $('#example2').DataTable({
+            "bLengthChange": false,
+            "searching": false
+        });
+    } );
+    function block(id, flag, type){
+        $.ajax({
+            type: 'GET',
+            url: 'BlockPeople',
+            data: {id:id, flag:flag, type:type},
+            success: function(){
+                console.log("Success!")
+                alert("Succesfully changed");
+                location.reload()
+                //$('#transferS').show().delay(3500).fadeOut();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("There was a problem");
+            }
+        });
+    }
+</script>

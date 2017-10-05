@@ -63,4 +63,20 @@ class UserViewController < ApplicationController
   def search_view
     @category_id = params['category']
   end
+
+  def block_people
+    if params['type'].to_i == 0
+      if params['flag'].to_i == 0
+        User.connection.execute("Update users SET status = 1 where id = "+params['id'].to_s+";")
+      else
+        User.connection.execute("Update users SET status = 0 where id = "+params['id'].to_s+";")
+      end
+    else
+      if params['flag'].to_i == 0
+        Product.connection.execute("Update products SET block = 1 where id = "+params['id'].to_s+";")
+      else
+        Product.connection.execute("Update products SET block = 0 where id = "+params['id'].to_s+";")
+      end
+    end
+  end
 end

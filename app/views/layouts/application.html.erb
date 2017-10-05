@@ -91,6 +91,11 @@
           <div class="header-right">
             <a class="account" href="user_panel">My Account</a>
           </div>
+          <% if User.find(current_user.id).user_typeID == 1 %>
+            <div class="header-right">
+              <a class="account" href="admin_panel">Admin</a>
+            </div>
+          <% end %>
         <% else %>
           <div class="header-right">
             <a class="account" href="users/sign_in">Sign In</a>

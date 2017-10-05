@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
                         <% Product.find_each do |row|%>
-                            <% if row['user_id'] == current_user.id%>
+                            <% if row['user_id'] == current_user.id and row['block'] != true%>
                                 <tr>
                                     <td><%= row['name'] %></td>
                                     <td><%= Category.find(row['category_id']).name %></td>

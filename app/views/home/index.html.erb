@@ -111,7 +111,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="container">
 				<!-- slider -->
 					<div class="trend-ads">
-						<h2>Recent Products</h2>
+						<h2>Recently Created Products</h2>
 					</div>
 					<table id="example" class="display" width="100%" cellspacing="0">
 						<thead>
@@ -124,12 +124,45 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</thead>
 						<tbody>
 							<% Product.order(:created_at).first(10).each do |row|%>
+								<%if row['block'] != true and User.find(row['user_id']).status != 1%>
 									<tr>
 										<td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
 										<td><%= Category.find(row['category_id']).name %></td>
 										<td><a href="seller_profile?user=<%=row['user_id']%>"><%= User.find(row['user_id']).name %></a></td>
 										<td><%= row['created_at'] %></td>
 									</tr>
+								<%end%>
+							<% end %>
+						</tbody>
+					</table> 
+				</div>
+			<!-- //slider -->				
+			</div>
+			<div class="trending-ads">
+				<div class="container">
+				<!-- slider -->
+					<div class="trend-ads">
+						<h2>Recently Updated Categories</h2>
+					</div>
+					<table id="example2" class="display" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Category</th>
+								<th>User</th>
+								<th>Creation date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @recentlyUpdated.each do |row|%>
+								<%if row[5] != 1 and User.find(row[3]).status != 1%>
+									<tr>
+										<td><a href="ProductProfile?product=<%=row[0]%>"><%= row[1] %></a></td>
+										<td><%= Category.find(row[2]).name %></td>
+										<td><a href="seller_profile?user=<%=row[3]%>"><%= User.find(row[3]).name %></a></td>
+										<td><%= row[4] %></td>
+									</tr>
+								<%end%>
 							<% end %>
 						</tbody>
 					</table> 
@@ -146,6 +179,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script>
 	$(document).ready(function() {
 		$('#example').DataTable({
+			"bLengthChange": false,
+			"searching": false
+		});
+
+		$('#example2').DataTable({
 			"bLengthChange": false,
 			"searching": false
 		});

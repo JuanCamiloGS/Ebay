@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'ProductProfile', to: 'user_view#product_profile'
   get 'BuyProduct', to: 'user_view#buy_product'
   get 'search_view', to: 'user_view#search_view'
+  get 'admin_panel', to: 'user_view#admin_panel'
+  get 'BlockPeople', to: 'user_view#block_people'
 
   devise_for :users
   get 'home/index'

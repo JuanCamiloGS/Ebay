@@ -1,31 +1,83 @@
-<div class="row" style="padding-top: 10vh; padding-bottom: 20vh">
+<div style="border-style: dotted; border-color: #ffffff; border-top-color: #000000;">
+    <div class="row" style="padding-top: 10vh; padding-bottom: 20vh">
         <div class="container">
-                <table id="example" class="display" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>User</th>
-                            <th>Creation date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <%if @category_id != nil%>
+                <div class="trend-ads">
+                        <h2>Category: <%= Category.find(@category_id).name %></h2>
+                </div>
+            <%else%>
+                <div class="trend-ads">
+                        <h2>Category: General</h2>
+                </div>
+            <%end%>
+            <div class="row" style="padding-bottom: 10vh">
+                <div class="col-md-2">
+                    <h3>Select category</h3>
+                </div>
+                <div class="col-md-10">
+                    <select style="width: 100%" id="cat_id" onchange="changeCat()">
+                            <option value="" disabled selected>Select your option</option>
+                            <option value="0">General</option>
+                            <% Category.find_each do |row|%>
+                                <option value="<%= raw row['id']%>"><%= row['name']%></option>
+                            <% end %>
+                    </select>
+                </div>
+            </div>
+            
+            <table id="example" class="display" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>User</th>
+                        <th>Creation date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%if  @category_id != nil%>
                         <% Product.where("category_id = ?", @category_id).each do |row|%>
+                            <%if row['block'] != true and User.find(row['user_id']).status != 1%>
                                 <tr>
                                     <td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
                                     <td><%= Category.find(row['category_id']).name %></td>
                                     <td><a href="seller_profile?user=<%=row['user_id']%>"><%= User.find(row['user_id']).name %></a></td>
                                     <td><%= row['created_at'] %></td>
                                 </tr>
+                            <% end %>
                         <% end %>
-                    </tbody>
-                </table> 
-            </div>
+                    <%else%>
+                        <% Product.find_each do |row|%>
+                            <%if row['block'] != true and User.find(row['user_id']).status != 1%>
+                                <tr>
+                                    <td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
+                                    <td><%= Category.find(row['category_id']).name %></td>
+                                    <td><a href="seller_profile?user=<%=row['user_id']%>"><%= User.find(row['user_id']).name %></a></td>
+                                    <td><%= row['created_at'] %></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    <%end%>
+                    
+                </tbody>
+            </table> 
+        </div>
+    </div>
 </div>
+
 
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
         });
     } );
+    function changeCat(){
+        val = $('#cat_id').val()
+        if(val == "0"){
+            window.location.href = "/search_view";
+        }else{
+            window.location.href = "/search_view?category="+val;
+        }
+        
+    }
 </script>

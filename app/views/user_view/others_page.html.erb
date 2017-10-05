@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                             <% Product.find_each do |row|%>
-                                <% if row['user_id'] == @userId.to_i%>
+                                <% if row['user_id'] == @userId.to_i and row['block'] != true%>
                                     <tr>
                                         <td><a href="user_panel"><%= row['name'] %></a></td>
                                         <td><%= Category.find(row['category_id']).name %></td>
