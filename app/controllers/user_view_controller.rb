@@ -13,6 +13,26 @@ class UserViewController < ApplicationController
     else
       @sellgrade = total.to_f/number
     end
+
+    @pendings = SellCalification.where("target_user = ? AND flag is null", current_user.id).count
+    @pendingsDetails = SellCalification.where("target_user = ? AND flag is null", current_user.id)
+
+    total = 0
+    BuyCalification.where("target_user = ?", current_user.id).each do |row|
+      puts "entré"
+      total = row['rating'].to_i + total
+    end
+    number = BuyCalification.where("target_user = ?", current_user.id).count
+    if number == 0
+      @buygrade = 5
+    else
+      @buygrade = total.to_f/number
+    end
+  end
+
+  def rate_buyers
+    User.connection.execute("Update sell_califications SET flag = 1 where id = "+params['id'].to_s+";")
+    BuyCalification.create!({:target_user => params['user'],:origin_user => current_user.id, :rating => params['grade']})
   end
 
   def create_product
@@ -46,6 +66,18 @@ class UserViewController < ApplicationController
       @sellgrade = 5
     else
       @sellgrade = total.to_f/number
+    end
+
+    total = 0
+    BuyCalification.where("target_user = ?", @userId).each do |row|
+      puts "entré"
+      total = row['rating'].to_i + total
+    end
+    number = BuyCalification.where("target_user = ?", @userId).count
+    if number == 0
+      @buygrade = 5
+    else
+      @buygrade = total.to_f/number
     end
   end
 

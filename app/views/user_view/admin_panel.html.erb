@@ -16,7 +16,7 @@
                 <tbody>
                     <% User.find_each do |row|%>
                             <tr>
-                                <td><%= row['name'] %></td>
+                                <td><a href="seller_profile?user=<%=row['id']%>"><%= row['name'] %></a></td>
                                 <td><%= row['email'] %></td>
                                 <%if row['status'] == 0%>
                                     <td><button type="button" class="btn" onclick="block(<%=row['id']%>,0,0)">Block</button></td>
@@ -46,7 +46,7 @@
                 <tbody>
                     <% Product.find_each do |row|%>
                             <tr>
-                                <td><%= row['name'] %></td>
+                                <td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
                                 <td><%= User.find(row['user_id']).name %></td>
                                 <td><%= Category.find(row['category_id']).name %></td>
                                 <%if row['block'] == false%>

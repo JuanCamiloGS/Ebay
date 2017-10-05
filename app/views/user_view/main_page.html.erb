@@ -26,7 +26,7 @@
                         <% Product.find_each do |row|%>
                             <% if row['user_id'] == current_user.id and row['block'] != true%>
                                 <tr>
-                                    <td><%= row['name'] %></td>
+                                    <td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
                                     <td><%= Category.find(row['category_id']).name %></td>
                                     <td><%= row['created_at'] %></td>
                                 </tr>
@@ -34,6 +34,32 @@
                         <% end %>
                     </tbody>
                 </table>
+                <%if @pendings > 0%>
+                <div class="product-details" style="padding-top: 5vh">
+                    <p><strong>Pending buyers callification:</strong></p>
+                
+                </div>
+                    <%@pendingsDetails.each_with_index do |row, index|%>
+                        <div class="row" style="padding-top: 3vh">
+                            <div class="col-md-2">
+                                    <a href="seller_profile?user=<%=row['origin_user']%>"><%= User.find(row['origin_user']).name %></a>
+                                    
+                            </div>
+                            <div class="col-md-8">
+                                    <select style="width: 100%" id="<%= "grade"+index.to_s%>">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                    <button type="button" class="btn" onclick="buy_grade(<%=row['origin_user']%>,<%=index%>,<%=row['id']%>)">Rate</button>
+                            </div>
+                        </div>
+                    <%end%>
+                <%end%>
             </div>
             <div class="col-md-5 product-details-grid">
                 <div class="item-price">
@@ -44,12 +70,12 @@
                     </div>
                     <div class="condition">
                         <p class="p-price">Buyer grade</p>
-                        <h4>5</h4>
+                        <h3 class="rate"><%=@buygrade%></h3>
                         <div class="clearfix"></div>
                     </div>
                     <div class="itemtype">
-                        <p class="p-price">User type</p>
-                        <h4>Company</h4>
+                        <p class="p-price">Average</p>
+                        <h3 class="rate"><%=(@buygrade+@sellgrade)/2.0%></h3>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -68,4 +94,22 @@
             "searching": false
         });
     } );
+    function buy_grade(user,index,id){
+        grade = $("#grade"+index).val();
+        $.ajax({
+            type: 'GET',
+            url: 'Rate_Buyer',
+            data: {user:user, grade:grade,id:id},
+            success: function(){
+                console.log("Success!")
+                alert("Sucessfully rated");
+                location.reload()
+                //$('#transferS').show().delay(3500).fadeOut();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("There was a problem");
+                
+            }
+        });
+    }
 </script>

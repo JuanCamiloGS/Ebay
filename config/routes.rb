@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'search_view', to: 'user_view#search_view'
   get 'admin_panel', to: 'user_view#admin_panel'
   get 'BlockPeople', to: 'user_view#block_people'
+  get 'Rate_Buyer', to: 'user_view#rate_buyers'
 
   devise_for :users
   get 'home/index'

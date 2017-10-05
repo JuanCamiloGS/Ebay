@@ -25,7 +25,7 @@
                             <% Product.find_each do |row|%>
                                 <% if row['user_id'] == @userId.to_i and row['block'] != true%>
                                     <tr>
-                                        <td><a href="user_panel"><%= row['name'] %></a></td>
+                                        <td><a href="ProductProfile?product=<%=row['id']%>"><%= row['name'] %></a></td>
                                         <td><%= Category.find(row['category_id']).name %></td>
                                         <td><%= row['created_at'] %></td>
                                     </tr>
@@ -43,12 +43,12 @@
                         </div>
                         <div class="condition">
                             <p class="p-price">Buyer grade</p>
-                            <h4>5</h4>
+                            <h3 class="rate"><%=@buygrade%></h3>
                             <div class="clearfix"></div>
                         </div>
                         <div class="itemtype">
-                            <p class="p-price">User type</p>
-                            <h4>Company</h4>
+                            <p class="p-price">Average</p>
+                            <h3 class="rate"><%=(@buygrade+@sellgrade)/2.0%></h3>
                             <div class="clearfix"></div>
                         </div>
                     </div>
